@@ -9,16 +9,28 @@
     function LunchCheckController ($scope) {
         $scope.input = "";
         $scope.message = "";
+
         $scope.display = function() {
 
             var array = $scope.input.split(',');
+            var strlen = $scope.input.length;
+            var noOfItems = array.length
 
-
-            if (array.length <= 3) {
-                $scope.message = "Enjoy!";
-            } else {
-                $scope.message = "Too much!!";
+            if( strlen > 0 )
+            {
+              if( noOfItems < 4 )
+              {
+                $scope.message = "Enjoy!"
+              }
+              else
+              {
+                  $scope.message = "Too much!"
+              }
             }
+            else {
+              $scope.message = " ";
+            }
+
         };
     }
 })();
