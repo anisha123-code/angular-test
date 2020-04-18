@@ -20,11 +20,11 @@
             {
               if( noOfItems < 4 )
               {
-                $scope.message = "Enjoy!";
+                $scope.message = "Enjoy!"
               }
               else
               {
-                  $scope.message = "Too much!";
+                  $scope.message = "Too much!"
               }
             }
             else {
