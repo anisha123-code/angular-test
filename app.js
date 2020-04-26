@@ -1,36 +1,79 @@
-(function() {
-    'use strict';
+(function(){
+    angular.module("ShoppingListCheckOff",[])
+        .controller("ToBuyController",ToBuyController)
+        .controller("AlreadyBoughtController",AlreadyBoughtController)
+        .service("ShoppingListCheckOffService",ShoppingListCheckOffService);
 
-    angular.module('LunchCheck', [])
-           .controller('LunchCheckController', LunchCheckController);
+    function ShoppingListCheckOffService(){
+        var service = this;
 
-    LunchCheckController.$inject = ['$scope'];
-
-    function LunchCheckController ($scope) {
-        $scope.input = "";
-        $scope.message = "";
-
-        $scope.display = function() {
-
-            var array = $scope.input.split(',');
-            var strlen = $scope.input.length;
-            var noOfItems = array.length
-
-            if( strlen > 0 )
+        service.ItemsToBuy= [
             {
-              if( noOfItems < 4 )
-              {
-                $scope.message = "Enjoy!"
-              }
-              else
-              {
-                  $scope.message = "Too much!"
-              }
-            }
-            else {
-              $scope.message = "Please enter data first";
+                name: "Cookies",
+                quantity: 10
+            },
+            {
+                name: "Icecream",
+                quantity: 10
+            },
+            {
+                name: "Paneer",
+                quantity: 10
+            },
+            {
+                name: "Pespi",
+                quantity: 5
+            },
+            {
+                name: "CandyBar",
+                quantity: 8
+            },
+            {
+                name: "Wafers",
+                quantity: 10
+            },
+            {
+                name: "Maggi",
+                quantity: 15
+            },
+            {
+                name: "Pan Cake",
+                quantity: 10
+            },
+            {
+                name: "Candy",
+                quantity: 10
+            },
+            {
+                name: "Doughnut",
+                quantity: 10
             }
 
+        ];
+
+        service.ItemsBought = [];
+
+        service.moveToBoughtList = function (index) {
+            Array.prototype.push.apply(service.ItemsBought, service.ItemsToBuy.splice(index, 1));
+        }
+    }
+
+
+    ToBuyController.$inject=["ShoppingListCheckOffService"];
+    function ToBuyController(ShoppingListCheckOffService){
+        var ToBuyCtrl = this;
+        ToBuyCtrl.ItemsInList = ShoppingListCheckOffService.ItemsToBuy;
+
+        ToBuyCtrl.moveToBoughtList = function (index) {
+            ShoppingListCheckOffService.moveToBoughtList(index);
         };
     }
+
+    AlreadyBoughtController.$inject=["ShoppingListCheckOffService"];
+    function AlreadyBoughtController(ShoppingListCheckOffService){
+        var AlreadyBoughtCtrl = this;
+        AlreadyBoughtCtrl.ItemsInList = ShoppingListCheckOffService.ItemsBought;
+
+    }
 })();
+
